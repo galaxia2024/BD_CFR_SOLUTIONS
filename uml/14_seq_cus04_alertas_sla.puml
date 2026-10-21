@@ -1,0 +1,22 @@
+@startuml
+!include estilo_rose.iuml
+autonumber
+actor "Gerente general" as GG
+boundary "Página SLA\n(informe_cfr.pbix)" as B
+control "Medida DAX\nCumplimiento_SLA" as C
+entity "dw.Fact_Tickets" as F
+entity "dw.Dim_SLA" as S
+GG -> B : filtrar por cliente, módulo o prioridad
+alt servidor de datos accesible
+  B -> C : evaluar medida
+  C -> F : leer Horas_Resolucion y Cumple_SLA
+  C -> S : leer Horas_Limite por tipo de contrato
+  C -> C : calcular % del plazo consumido y % de cumplimiento
+  C --> B : porcentaje
+  B -> B : asignar color por ticket (verde < 70 % del plazo,\námbar >= 70 %, rojo si venció)
+  B --> GG : tacómetros y alertas semafóricas
+else servidor no accesible
+  B -> B : conservar la última vista en caché
+  B --> GG : "Error: servidor de datos no accesible"
+end
+@enduml

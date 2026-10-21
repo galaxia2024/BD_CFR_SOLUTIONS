@@ -1,0 +1,30 @@
+@startuml
+!include estilo_rose.iuml
+autonumber
+actor "Cliente\ncorporativo" as C
+actor "Consultor\nde soporte" as CS
+actor "Jefe de\nsoporte" as JS
+entity "Ticket" as T
+entity "Excel de\nactividades" as X
+C -> T : registrar incidencia (módulo, prioridad)
+JS -> T : asignar consultor
+T --> CS : notificar asignación
+CS -> T : analizar ticket
+alt necesita información
+  CS -> C : solicitar información
+  alt sin respuesta en 72 horas
+    CS -> T : cerrar por abandono
+    CS -> C : notificar cierre
+  else el cliente responde
+    C -> CS : enviar información
+  end
+end
+opt requiere otra área
+  CS -> JS : solicitar escalamiento
+  JS -> T : marcar Escalado = Sí y reasignar
+end
+CS -> C : enviar solución
+C --> CS : confirmar conformidad
+CS -> T : cerrar ticket (Fecha_Cierre)
+CS -> X : registrar actividad del día
+@enduml

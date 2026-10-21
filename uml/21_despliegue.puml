@@ -1,0 +1,29 @@
+@startuml
+!include estilo_rose.iuml
+node "Servidor Lenovo ThinkSystem ST50\n<<device>>\nXeon E-2224G, 16 GB RAM, 2 TB" as SRV {
+  node "Windows\n<<os>>" as OS1 {
+    node "SQL Server Express\n<<execution environment>>" as SQL {
+      artifact "db_tickets.mdf" as A1
+      artifact "DW_CFR_BI.mdf" as A2
+      artifact "ddl_dw_cfr_bi.sql" as A3
+      artifact "etl_procedimientos.sql" as A4
+    }
+    artifact "etl_nocturno.bat\n(Programador de tareas)" as A5
+  }
+}
+node "Terminal administrativo Lenovo ThinkCentre\n<<device>>\nCore i5, 8 GB RAM" as TER {
+  node "Python 3\n<<execution environment>>" as PY {
+    artifact "experimento.py" as A6
+    artifact "contraste_hipotesis.py" as A7
+  }
+}
+node "Computadora de alta gerencia HP ProDesk\n<<device>>\nCore i7, 16 GB RAM" as GER {
+  node "Power BI Desktop\n<<execution environment>>" as PB {
+    artifact "informe_cfr.pbix" as A8
+  }
+}
+cloud "Power BI Service\n(opcional)" as CLOUD
+TER -- SRV : LAN 1 Gbps\nTCP 1433 (TDS)
+GER -- SRV : LAN 1 Gbps\nTCP 1433 (TDS)
+GER -- CLOUD : HTTPS 443\n(publicación)
+@enduml

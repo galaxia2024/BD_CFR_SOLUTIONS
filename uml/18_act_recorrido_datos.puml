@@ -1,0 +1,20 @@
+@startuml
+!include estilo_rose.iuml
+|Origen (db_tickets)|
+start
+:Tickets, Clientes, Consultores,\nMódulos y Proyectos;
+|Staging (stg)|
+:usp_etl_extraer:\ncopiar filas nuevas o modificadas;
+:usp_etl_limpiar:\n1. eliminar duplicados\n2. descartar cierre < creación\n3. imputar y marcar prioridad vacía;
+|Almacén (dw)|
+:usp_etl_cargar:\nFact_Tickets y dimensiones;
+:Agregar por módulo y mes:\nFact_Demanda_Modulo_Mes (Y, X1, X2, X3);
+|Núcleo RLM (experimento.py)|
+:Partición temporal\n(entrenamiento t <= 29, prueba t >= 30);
+:Ajuste por mínimos cuadrados;
+:Evaluación (RMSE, MAE) y registro\nen Ejecucion_Modelo;
+|Power BI|
+:Medida DAX con los betas vigentes;
+:Tableros de proyección y de SLA;
+stop
+@enduml

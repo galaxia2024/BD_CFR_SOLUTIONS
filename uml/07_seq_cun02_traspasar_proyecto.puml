@@ -1,0 +1,22 @@
+@startuml
+!include estilo_rose.iuml
+autonumber
+actor "Consultor de\nproyectos" as CP
+actor "Cliente\ncorporativo" as C
+actor "Jefe de\nconsultoría" as JC
+actor "Jefe de\nsoporte" as JS
+entity "Proyecto" as P
+entity "Cliente" as EC
+entity "Ticket" as T
+CP -> C : solicitar pruebas de aceptación (UAT)
+C --> CP : aprobar UAT
+CP -> P : registrar Fecha_GoLive_Real
+CP -> JC : informar Go-Live
+JC -> JS : entregar documentación y accesos
+JS -> EC : registrar cliente activo (tipo de contrato)
+JS -> P : asignar consultor de soporte
+loop incidencias posteriores al Go-Live
+  C -> T : registrar incidencia post Go-Live
+  T --> JS : ingresa a la cola de soporte (CUN-01)
+end
+@enduml

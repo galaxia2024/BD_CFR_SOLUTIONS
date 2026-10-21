@@ -1,0 +1,38 @@
+@startuml
+!include estilo_rose.iuml
+|Cliente corporativo|
+start
+:Registrar incidencia en el portal\no enviarla por correo;
+|Consultor de soporte|
+:Verificar y analizar el ticket;
+if (¿Necesita información\ndel cliente?) then (sí)
+  :Solicitar información por el portal;
+  |Cliente corporativo|
+  if (¿Responde en 3 días?) then (no)
+    |Consultor de soporte|
+    :Cerrar el ticket por abandono\ny notificar al cliente;
+    stop
+  else (sí)
+    :Enviar la información solicitada;
+  endif
+  |Consultor de soporte|
+endif
+if (¿Requiere otra área?) then (sí)
+  |Jefe de soporte|
+  :Escalar el ticket (Escalado = Sí)\ny reasignarlo;
+  |Consultor de soporte|
+else (no)
+endif
+:Solucionar el caso y enviar\nla solución por el portal;
+|Cliente corporativo|
+if (¿Conforme con la solución?) then (no)
+  |Consultor de soporte|
+  :Analizar nuevamente la solución;
+  :Enviar la solución corregida;
+else (sí)
+endif
+|Consultor de soporte|
+:Cerrar el ticket;
+:Registrar la actividad del día\nen el Excel de actividades;
+stop
+@enduml

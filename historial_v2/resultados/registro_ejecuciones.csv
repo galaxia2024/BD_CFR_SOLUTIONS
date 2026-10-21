@@ -1,0 +1,2 @@
+id_ejecucion,marca_tiempo,version_algoritmo,semilla_generador,lambda_ridge,version_datos,particion,equipo,sha256_dataset,sha256_protocolo
+EJ-20261021-003139,2026-10-21T00:31:39,1.0.0,2026,0.01,2.0.0,"entrenamiento t<=29 (551 casos), prueba t>=30 (133 casos)",x86_64 | Linux | Python 3.13.16 | NumPy 2.5.3,dba0c7d60030016a414a3454e6af2420747bbde0918ef4f9f12475f785abeb88,293f7301e121ee2e161b0739ca7d90d3156910ab24b7b3047cdddeb0bb9f590d

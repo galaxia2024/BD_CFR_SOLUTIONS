@@ -1,0 +1,26 @@
+@startuml
+!include estilo_rose.iuml
+hide empty members
+class "Consultor de soporte" as CS <<(W,#FFCC99) business worker>>
+class "Jefe de soporte" as JS <<(W,#FFCC99) business worker>>
+class "Consultor de proyectos" as CP <<(W,#FFCC99) business worker>>
+class "Jefe de consultoría" as JC <<(W,#FFCC99) business worker>>
+class "Jefe de área" as JA <<(W,#FFCC99) business worker>>
+class "Ticket" as T <<(E,#99CCFF) business entity>>
+class "Cliente" as CL <<(E,#99CCFF) business entity>>
+class "Módulo SAP B1" as M <<(E,#99CCFF) business entity>>
+class "Proyecto" as P <<(E,#99CCFF) business entity>>
+class "Incidencia post Go-Live" as I <<(E,#99CCFF) business entity>>
+class "Reporte de gestión (Word)" as R <<(E,#99CCFF) business entity>>
+CS "1" -- "0..*" T : atiende >
+JS "1" -- "0..*" T : asigna y escala >
+CL "1" -- "0..*" T : reporta >
+T "0..*" -- "1" M : afecta >
+CP "1" -- "0..*" P : implementa >
+JC "1" -- "0..*" P : supervisa >
+CL "1" -- "0..*" P : contrata >
+P "1" -- "0..*" I : genera >
+I "1" -- "1" T : se registra como >
+JA "1" -- "0..*" R : elabora >
+R "1" -- "1..*" T : resume >
+@enduml

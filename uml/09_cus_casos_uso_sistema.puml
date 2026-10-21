@@ -1,0 +1,19 @@
+@startuml
+!include estilo_rose.iuml
+left to right direction
+actor "Analista de TI" as AN
+actor "Programador de\ntareas de Windows" as PT
+actor "Gerente general" as GG
+rectangle "Sistema de inteligencia de negocios CFR (DW_CFR_BI)" {
+  usecase "CUS-01\nEjecutar ingesta y\nlimpieza de tickets" as U1
+  usecase "CUS-02\nProcesar algoritmo\npredictivo de regresión" as U2
+  usecase "CUS-03\nExplotar dashboard y\nproyecciones mensuales" as U3
+  usecase "CUS-04\nMonitorear alertas\nsemafóricas de SLA" as U4
+}
+AN --> U1
+PT --> U1
+AN --> U2
+GG --> U3
+GG --> U4
+U3 ..> U2 : <<usa resultados>>
+@enduml

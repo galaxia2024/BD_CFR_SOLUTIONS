@@ -1,0 +1,9 @@
+Hipotesis,Indicador,Valor
+H1,Tickets inconsistentes en origen (%),2.0
+H1,Tickets inconsistentes en el almacén (%),0.0
+H1,Decisión,Se rechaza H0
+H2,Casos de prueba,133
+H2,Media de d (tickets^2),0.3282
+H2,Estadístico t,1.2452
+H2,Valor p (unilateral),0.1076
+H2,Decisión,No se rechaza H0

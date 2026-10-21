@@ -1,0 +1,28 @@
+@startuml
+!include estilo_rose.iuml
+autonumber
+actor "Analista de TI" as AN
+boundary "IU_EjecucionModelo\n(consola)" as B
+control "CtrlAjusteModelo\n(experimento.py)" as C
+control "CtrlValidacionDatos" as V
+entity "dw.vw_Demanda_\nModulo_Mes" as D
+entity "dw.Ejecucion_Modelo" as E
+entity "dw.Prediccion_\nModulo_Mes" as P
+AN -> B : solicitar ajuste del modelo
+B -> C : ajustar(version = 1.0.0)
+C -> D : leer Y, X1, X2, X3
+D --> C : 684 casos módulo-mes
+C -> V : verificarCasosPorModulo()
+alt algún módulo con menos de 3 casos
+  V --> C : datos insuficientes
+  C --> B : "Error: data histórica insuficiente"
+else datos suficientes
+  C -> C : partición temporal (t <= 29 / t >= 30)
+  C -> C : resolver mínimos cuadrados (lstsq)
+  C -> C : calcular RMSE y MAE
+  C -> E : insertar ejecución (id, marca de tiempo,\nparámetros, versión, betas, métricas)
+  C -> P : insertar Ŷ por módulo y mes
+  C --> B : resumen (betas, RMSE, MAE)
+end
+B --> AN : mostrar resultado
+@enduml

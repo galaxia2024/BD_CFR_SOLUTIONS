@@ -1,0 +1,32 @@
+@startuml
+!include estilo_rose.iuml
+autonumber
+actor "Programador\nde tareas" as PT
+boundary "etl_nocturno.bat\n(sqlcmd)" as B
+control "usp_etl_extraer" as CE
+control "usp_etl_limpiar" as CL
+control "usp_etl_cargar" as CC
+entity "db_tickets.Tickets" as O
+entity "stg.Tickets" as S
+entity "dw.Fact_Tickets" as F
+entity "dw.Log_Carga" as L
+PT -> B : iniciar a las 23:00
+B -> CE : EXEC usp_etl_extraer
+CE -> L : registrar inicio de la carga
+alt base de origen disponible
+  CE -> O : SELECT tickets nuevos o modificados
+  O --> CE : filas
+  CE -> S : insertar en staging
+  B -> CL : EXEC usp_etl_limpiar
+  CL -> S : eliminar duplicados
+  CL -> S : descartar cierres anteriores a la creación
+  CL -> S : imputar prioridad vacía y marcarla
+  B -> CC : EXEC usp_etl_cargar
+  CC -> F : insertar con llaves subrogadas (transacción)
+  CC -> L : registrar recuentos y estado = Correcto
+else conexión caída o error
+  CE -> L : registrar estado = Error y mensaje
+  CE --> B : ROLLBACK y código de error
+end
+B --> PT : código de salida
+@enduml

@@ -1,0 +1,106 @@
+' Estilo visual inspirado en IBM Rational Rose: fondo amarillo claro, bordes granate.
+skinparam dpi 150
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam shadowing true
+skinparam roundCorner 0
+skinparam ArrowColor #990033
+skinparam ArrowFontSize 10
+skinparam BackgroundColor #FFFFFF
+
+skinparam class {
+  BackgroundColor #FFFFCC
+  BorderColor #990033
+  ArrowColor #990033
+  StereotypeFontColor #000000
+  AttributeIconSize 0
+}
+skinparam usecase {
+  BackgroundColor #FFFFCC
+  BorderColor #990033
+  ArrowColor #990033
+}
+skinparam actor {
+  BackgroundColor #FFFFCC
+  BorderColor #990033
+}
+skinparam participant {
+  BackgroundColor #FFFFCC
+  BorderColor #990033
+}
+skinparam entity {
+  BackgroundColor #FFFFCC
+  BorderColor #990033
+}
+skinparam boundary {
+  BackgroundColor #FFFFCC
+  BorderColor #990033
+}
+skinparam control {
+  BackgroundColor #FFFFCC
+  BorderColor #990033
+}
+skinparam database {
+  BackgroundColor #FFFFCC
+  BorderColor #990033
+}
+skinparam sequence {
+  LifeLineBorderColor #990033
+  LifeLineBackgroundColor #FFFFCC
+  GroupBorderColor #990033
+  GroupBackgroundColor #FFFFFF
+  DividerBackgroundColor #FFFFCC
+}
+skinparam activity {
+  BackgroundColor #FFFFCC
+  BorderColor #990033
+  DiamondBackgroundColor #FFFFCC
+  DiamondBorderColor #990033
+  StartColor #000000
+  EndColor #000000
+  BarColor #990033
+}
+skinparam swimlane {
+  BorderColor #990033
+  TitleFontStyle bold
+}
+skinparam state {
+  BackgroundColor #FFFFCC
+  BorderColor #990033
+  ArrowColor #990033
+  StartColor #000000
+  EndColor #000000
+}
+skinparam component {
+  BackgroundColor #FFFFCC
+  BorderColor #990033
+  ArrowColor #990033
+}
+skinparam interface {
+  BackgroundColor #FFFFCC
+  BorderColor #990033
+}
+skinparam node {
+  BackgroundColor #FFFFCC
+  BorderColor #990033
+}
+skinparam artifact {
+  BackgroundColor #FFFFFF
+  BorderColor #990033
+}
+skinparam cloud {
+  BackgroundColor #FFFFFF
+  BorderColor #990033
+}
+skinparam package {
+  BackgroundColor #FFFFFF
+  BorderColor #990033
+}
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #990033
+}
+skinparam note {
+  BackgroundColor #FFFFFF
+  BorderColor #990033
+}

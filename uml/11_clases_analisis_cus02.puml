@@ -1,0 +1,45 @@
+@startuml
+!include estilo_rose.iuml
+hide empty members
+class "IU_EjecucionModelo" as B <<(B,#FFFFFF) boundary>> {
+  solicitarAjuste()
+  mostrarResumen()
+}
+class "CtrlAjusteModelo" as C1 <<(C,#FFFFFF) control>> {
+  ajustar()
+  evaluar()
+  registrarEjecucion()
+}
+class "CtrlValidacionDatos" as C2 <<(C,#FFFFFF) control>> {
+  verificarCasosPorModulo()
+}
+class "DatasetModuloMes" as E1 <<(E,#FFFFFF) entity>> {
+  periodo
+  modulo
+  y
+  x1
+  x2
+  x3
+}
+class "EjecucionModelo" as E2 <<(E,#FFFFFF) entity>> {
+  idEjecucion
+  marcaTiempo
+  parametros
+  versionAlgoritmo
+  coeficientes
+  rmsePrueba
+  maePrueba
+}
+class "PrediccionModuloMes" as E3 <<(E,#FFFFFF) entity>> {
+  periodo
+  modulo
+  yEstimada
+}
+B --> C1
+C1 --> C2
+C2 --> E1
+C1 --> E1
+C1 --> E2
+C1 --> E3
+E2 "1" *-- "0..*" E3
+@enduml

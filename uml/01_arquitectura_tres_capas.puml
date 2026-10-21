@@ -1,0 +1,25 @@
+@startuml
+!include estilo_rose.iuml
+left to right direction
+actor "Analista de TI" as AN
+actor "Gerente general" as GG
+package "Capa 1: Origen (OLTP)" {
+  database "db_tickets\n(SQL Server)" as OLTP
+}
+package "Capa 2: Integración y almacenamiento" {
+  component "ETL T-SQL\n(usp_etl_extraer,\nusp_etl_limpiar,\nusp_etl_cargar)" as ETL
+  database "DW_CFR_BI\n(stg + dw)" as DW
+}
+package "Capa 3: Analítica y presentación" {
+  component "Núcleo RLM\n(experimento.py)" as RLM
+  component "Informe Power BI\n(informe_cfr.pbix)" as PBI
+}
+OLTP --> ETL : extrae tickets\ny maestros
+ETL --> DW : carga datos limpios\ny Log_Carga
+DW --> RLM : vw_Demanda_Modulo_Mes
+RLM --> DW : Ejecucion_Modelo\nPrediccion_Modulo_Mes
+DW --> PBI : Import / DirectQuery
+AN --> ETL : programa y supervisa
+AN --> RLM : ejecuta el ajuste
+GG --> PBI : consulta tableros
+@enduml

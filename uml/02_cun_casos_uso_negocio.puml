@@ -1,0 +1,20 @@
+@startuml
+!include estilo_rose.iuml
+left to right direction
+skinparam usecase<<business use case>> {
+  BackgroundColor #FFFFCC
+  BorderColor #990033
+  BorderThickness 2
+}
+actor "Cliente corporativo" as CLI <<business actor>>
+actor "Gerente general" as GG <<business actor>>
+rectangle "CFR Business & Solutions E.I.R.L." {
+  usecase "CUN-01\nGestionar incidente\nde soporte" as CUN1 <<business use case>>
+  usecase "CUN-02\nTraspasar proyecto\na soporte" as CUN2 <<business use case>>
+  usecase "CUN-03\nElaborar reporte\nde gestión" as CUN3 <<business use case>>
+}
+CLI --> CUN1
+CLI --> CUN2
+GG --> CUN3
+CUN2 ..> CUN1 : <<include>>
+@enduml

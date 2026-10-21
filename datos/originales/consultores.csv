@@ -1,0 +1,12 @@
+ID_Consultor,nombres,apellidos,area,telefono,email,genero,estado
+1,Consultor 01,(sintético),Consultoría,986666683,consultor01@ejemplo.pe,2,1
+2,Consultor 02,(sintético),Consultoría,926104133,consultor02@ejemplo.pe,2,1
+3,Consultor 03,(sintético),Consultoría,912377578,consultor03@ejemplo.pe,2,1
+4,Consultor 04,(sintético),Soporte,967592184,consultor04@ejemplo.pe,2,1
+5,Consultor 05,(sintético),Soporte,942892990,consultor05@ejemplo.pe,1,1
+6,Consultor 06,(sintético),Soporte,952054156,consultor06@ejemplo.pe,2,1
+7,Consultor 07,(sintético),Soporte,917184524,consultor07@ejemplo.pe,2,1
+8,Consultor 08,(sintético),Soporte,943345047,consultor08@ejemplo.pe,1,1
+9,Consultor 09,(sintético),Soporte,967910599,consultor09@ejemplo.pe,1,1
+10,Consultor 10,(sintético),Desarrollo,941942560,consultor10@ejemplo.pe,1,1
+11,Consultor 11,(sintético),Desarrollo,984795496,consultor11@ejemplo.pe,2,1

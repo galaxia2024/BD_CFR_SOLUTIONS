@@ -1,0 +1,25 @@
+@startuml
+!include estilo_rose.iuml
+autonumber
+actor "Gerente general" as GG
+boundary "Página Proyección\n(informe_cfr.pbix)" as B
+control "Medida DAX\nProyeccion_Tickets_Modulo" as C
+entity "dw.Ejecucion_Modelo" as E
+entity "dw.Fact_Demanda_\nModulo_Mes" as F
+entity "dw.Dim_Modulo" as M
+GG -> B : seleccionar módulo y periodo
+B -> C : evaluar medida en el contexto del filtro
+C -> E : leer betas de la ejecución vigente
+alt existe una ejecución vigente
+  E --> C : β0, β1, β2, β3
+  C -> F : leer X1 y X2 del periodo
+  C -> M : leer Peso_Productividad (X3)
+  C -> C : Ŷ = β0 + β1·X1 + β2·X2 + β3·X3
+  C --> B : Ŷ continuo
+  B -> B : redondear y dibujar la tendencia
+  B --> GG : gráfico de demanda observada y proyectada
+else sin ejecución vigente
+  C --> B : BLANK()
+  B --> GG : mensaje "Modelo no disponible"
+end
+@enduml

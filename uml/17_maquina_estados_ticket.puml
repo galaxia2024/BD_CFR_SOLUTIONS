@@ -1,0 +1,21 @@
+@startuml
+!include estilo_rose.iuml
+hide empty description
+[*] --> Registrado : registrarTicket / asignar ID_Ticket y Fecha_Creacion
+Registrado --> Asignado : asignarConsultor(c) [c.estado = activo] / guardar ID_Consultor
+Asignado --> EnAtencion : iniciarAtencion
+EnAtencion --> EsperandoCliente : solicitarInformacion / notificar por el portal
+EsperandoCliente --> EnAtencion : clienteResponde
+EsperandoCliente --> CerradoPorAbandono : after(72 h) [sin respuesta] / enviar aviso y fijar Fecha_Cierre
+EnAtencion --> Escalado : escalar [requiere otra área] / Escalado = Sí
+Escalado --> EnAtencion : devolverSolucion
+EnAtencion --> Resuelto : proponerSolucion
+Resuelto --> EnAtencion : clienteRechaza
+Resuelto --> Cerrado : clienteConfirma / fijar Fecha_Cierre y evaluar SLA
+Cerrado --> [*]
+CerradoPorAbandono --> [*]
+state "En atención" as EnAtencion
+state "Esperando al cliente" as EsperandoCliente
+state "Cerrado por abandono" as CerradoPorAbandono
+note right of Cerrado : Inmutable: el ETL solo\ncarga tickets cerrados.
+@enduml

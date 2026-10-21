@@ -1,0 +1,4 @@
+Modelo,Mediana_ms_ajuste_prediccion
+A. Regresión lineal simple,0.0195
+B. Regresión lineal múltiple,0.0240
+C. Regresión Ridge,0.0266

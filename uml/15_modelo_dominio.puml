@@ -1,0 +1,41 @@
+@startuml
+!include estilo_rose.iuml
+hide methods
+class Cliente {
+  {field} tipo (contrato, bolsa, cotización)
+  estado
+}
+class Consultor {
+  nombres
+  estado
+}
+class Modulo {
+  nombre
+  pesoProductividad
+}
+class Prioridad {
+  nivel
+  horasLimiteSLA
+}
+class Ticket {
+  fechaCreacion
+  fechaCierre
+  escalado
+  estado
+}
+class Proyecto {
+  fechaInicio
+  fechaGoLiveReal
+}
+class IncidenciaPostGoLive {
+  fechaReporte
+  tipo
+}
+Cliente "1" -- "0..*" Ticket : reporta
+Consultor "1" -- "0..*" Ticket : atiende
+Modulo "1" -- "0..*" Ticket : afectado en
+Prioridad "1" -- "0..*" Ticket : clasifica
+Cliente "1" -- "0..*" Proyecto : contrata
+Proyecto "1" -- "0..*" IncidenciaPostGoLive : origina
+IncidenciaPostGoLive "1" -- "1" Ticket : se registra como
+@enduml

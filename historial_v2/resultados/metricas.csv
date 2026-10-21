@@ -1,0 +1,5 @@
+Modelo,RMSE_entrenamiento,MAE_entrenamiento,RMSE_prueba,MAE_prueba,Razon_RMSE_prueba_entrenamiento,R2_ajustado_entrenamiento,R2_prueba,P_RMSE,P_MAE,P_total
+Línea base (promedio histórico),2.3670,1.7903,2.4464,1.9528,1.0335,0.4267,0.2388,5,5,5.0000
+A. Regresión lineal simple,3.1804,2.5358,2.8848,2.3527,0.9071,-0.0011,-0.0585,5,5,5.0000
+B. Regresión lineal múltiple,2.2831,1.7477,2.3779,1.9277,1.0415,0.4822,0.2808,5,5,5.0000
+C. Regresión Ridge,2.2831,1.7477,2.3779,1.9277,1.0415,0.4822,0.2808,5,5,5.0000

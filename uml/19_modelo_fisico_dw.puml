@@ -1,0 +1,103 @@
+@startuml
+!include estilo_rose.iuml
+hide methods
+hide stereotype
+skinparam linetype ortho
+class "dw.Dim_Tiempo" as DT <<(T,#FFCC99) table>> {
+  PK SK_Tiempo : INT
+  Fecha : DATE
+  Anio : SMALLINT
+  Mes : TINYINT
+  {field} Nombre_Mes : VARCHAR(15)
+  Trimestre : TINYINT
+}
+class "dw.Dim_Cliente" as DC <<(T,#FFCC99) table>> {
+  PK SK_Cliente : INT
+  BK_Cliente_ID : INT
+  {field} Razon_Social : VARCHAR(150)
+  {field} RUC : CHAR(11)
+  {field} Tipo_Contrato : VARCHAR(15)
+  Mes_Alta : INT
+  Mes_Baja : INT NULL
+}
+class "dw.Dim_Consultor" as DO <<(T,#FFCC99) table>> {
+  PK SK_Consultor : INT
+  BK_Consultor_ID : INT
+  {field} Nombre_Completo : VARCHAR(150)
+  Estado : BIT
+}
+class "dw.Dim_Modulo" as DM <<(T,#FFCC99) table>> {
+  PK SK_Modulo : INT
+  BK_Modulo_ID : INT
+  {field} Nombre_Modulo : VARCHAR(60)
+  Peso_Productividad : TINYINT
+}
+class "dw.Dim_SLA" as DS <<(T,#FFCC99) table>> {
+  PK SK_SLA : INT
+  {field} Tipo_Contrato : VARCHAR(15)
+  {field} Prioridad : VARCHAR(10)
+  Horas_Limite : SMALLINT
+}
+class "dw.Fact_Tickets" as FT <<(T,#FFCC99) table>> {
+  PK Id_Hecho : BIGINT
+  BK_Ticket_ID : INT
+  FK SK_Tiempo : INT
+  FK SK_Cliente : INT
+  FK SK_Consultor : INT
+  FK SK_Modulo : INT
+  FK SK_SLA : INT
+  {field} Horas_Resolucion : DECIMAL(8,2)
+  Cumple_SLA : BIT
+  Escalado : BIT
+  Cerrado_Por_Abandono : BIT
+  Prioridad_Imputada : BIT
+  {field} Bono_Ticket : DECIMAL(10,2)
+  Conteo_Tickets : INT
+}
+class "dw.Fact_Demanda_Modulo_Mes" as FD <<(T,#FFCC99) table>> {
+  PK,FK SK_Tiempo : INT
+  PK,FK SK_Modulo : INT
+  Y_Tickets : INT
+  X1_Clientes_Activos : INT
+  X2_GoLive_Mes_Anterior : INT
+  X3_Peso_Modulo : TINYINT
+}
+class "dw.Ejecucion_Modelo" as EM <<(T,#FFCC99) table>> {
+  {field} PK Id_Ejecucion : VARCHAR(30)
+  Marca_Tiempo : DATETIME2
+  {field} Version_Algoritmo : VARCHAR(10)
+  Semilla : INT
+  {field} Parametros : NVARCHAR(400)
+  {field} Beta0 .. Beta3 : DECIMAL(10,4)
+  {field} RMSE_Prueba : DECIMAL(8,4)
+  {field} MAE_Prueba : DECIMAL(8,4)
+  Vigente : BIT
+}
+class "dw.Prediccion_Modulo_Mes" as PM <<(T,#FFCC99) table>> {
+  {field} PK,FK Id_Ejecucion : VARCHAR(30)
+  PK,FK SK_Tiempo : INT
+  PK,FK SK_Modulo : INT
+  {field} Y_Estimada : DECIMAL(8,2)
+}
+class "dw.Log_Carga" as LC <<(T,#FFCC99) table>> {
+  PK Id_Carga : INT
+  Inicio : DATETIME2
+  Fin : DATETIME2
+  Registros_Leidos : INT
+  Duplicados : INT
+  Invalidos : INT
+  Imputados : INT
+  {field} Estado : VARCHAR(10)
+  {field} Mensaje : NVARCHAR(400)
+}
+DT "1" -- "0..*" FT
+DC "1" -- "0..*" FT
+DO "1" -- "0..*" FT
+DM "1" -- "0..*" FT
+DS "1" -- "0..*" FT
+DT "1" -- "0..*" FD
+DM "1" -- "0..*" FD
+EM "1" -- "0..*" PM
+DT "1" -- "0..*" PM
+DM "1" -- "0..*" PM
+@enduml

@@ -1,0 +1,27 @@
+@startuml
+!include estilo_rose.iuml
+|Consultor de proyectos|
+start
+:Completar la parametrización\ny las pruebas internas;
+|Cliente corporativo|
+:Ejecutar las pruebas de aceptación (UAT);
+if (¿UAT aprobada?) then (no)
+  |Consultor de proyectos|
+  :Corregir observaciones;
+  |Cliente corporativo|
+  :Repetir las pruebas de aceptación;
+else (sí)
+endif
+|Consultor de proyectos|
+:Registrar el Go-Live real\n(Fecha_GoLive_Real);
+|Jefe de consultoría|
+:Entregar documentación, accesos\ny pendientes al área de soporte;
+|Jefe de soporte|
+:Registrar al cliente como activo\n(contrato o bolsa de horas);
+:Asignar un consultor de soporte;
+|Cliente corporativo|
+:Reportar incidencias posteriores\nal Go-Live;
+|Consultor de soporte|
+:Atender cada incidencia como ticket\n(CUN-01);
+stop
+@enduml

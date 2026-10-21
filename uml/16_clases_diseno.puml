@@ -1,0 +1,102 @@
+@startuml
+!include estilo_rose.iuml
+skinparam linetype ortho
+package "etl (T-SQL)" {
+  class ProcesoETL {
+    +extraer(desde: DATETIME): int
+    +limpiar(): ResumenLimpieza
+    +cargar(): int
+  }
+  class ReglaLimpieza {
+    +tipo: string
+    +aplicar(): int
+  }
+  class LogCarga {
+    +idCarga: int
+    +inicio: datetime
+    +fin: datetime
+    +duplicados: int
+    +invalidos: int
+    +imputados: int
+    +estado: string
+  }
+}
+package "modelo (Python)" {
+  class ModeloRLM {
+    +version: string
+    +coeficientes: float[4]
+    +ajustar(X: float[][], y: float[]): void
+    +predecir(X: float[][]): float[]
+  }
+  class EvaluadorModelo {
+    +rmse(y: float[], yHat: float[]): float
+    +mae(y: float[], yHat: float[]): float
+  }
+  class EjecucionModelo {
+    +idEjecucion: string
+    +marcaTiempo: datetime
+    +parametros: string
+    +versionAlgoritmo: string
+    +rmsePrueba: float
+    +maePrueba: float
+    +vigente: bool
+  }
+  class PrediccionModuloMes {
+    +skTiempo: int
+    +skModulo: int
+    +yEstimada: float
+  }
+}
+package "persistencia (DW_CFR_BI)" {
+  class DimCliente {
+    +skCliente: int
+    +tipoContrato: string
+    +mesAlta: int
+    +mesBaja: int
+  }
+  class DimConsultor {
+    +skConsultor: int
+  }
+  class DimModulo {
+    +skModulo: int
+    +pesoProductividad: int
+  }
+  class DimSLA {
+    +skSLA: int
+    +tipoContrato: string
+    +prioridad: string
+    +horasLimite: int
+  }
+  class DimTiempo {
+    +skTiempo: int
+    +fecha: date
+  }
+  class FactTicket {
+    +horasResolucion: decimal
+    +cumpleSLA: bool
+    +escalado: bool
+    +cerradoPorAbandono: bool
+  }
+  class FactDemandaModuloMes {
+    +yTickets: int
+    +x1ClientesActivos: int
+    +x2GoLiveMesAnterior: int
+    +x3PesoModulo: int
+  }
+}
+ProcesoETL "1" *-- "3" ReglaLimpieza
+ProcesoETL ..> LogCarga : registra
+ProcesoETL ..> FactTicket : carga
+FactTicket "0..*" --> "1" DimCliente
+FactTicket "0..*" --> "1" DimConsultor
+FactTicket "0..*" --> "1" DimModulo
+FactTicket "0..*" --> "1" DimSLA
+FactTicket "0..*" --> "1" DimTiempo
+FactDemandaModuloMes "0..*" --> "1" DimModulo
+FactDemandaModuloMes "0..*" --> "1" DimTiempo
+FactDemandaModuloMes ..> FactTicket : agrega
+ModeloRLM ..> FactDemandaModuloMes : lee
+ModeloRLM ..> EvaluadorModelo : usa
+ModeloRLM ..> EjecucionModelo : registra
+EjecucionModelo "1" *-- "0..*" PrediccionModuloMes
+@enduml

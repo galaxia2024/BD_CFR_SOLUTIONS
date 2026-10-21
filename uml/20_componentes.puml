@@ -1,0 +1,25 @@
+@startuml
+!include estilo_rose.iuml
+left to right direction
+component "Programador de tareas\n(etl_nocturno.bat)" as PT
+component "Base transaccional\ndb_tickets" as OLTP
+interface "ITDS" as I1
+component "ETL T-SQL\n(usp_etl_extraer,\nusp_etl_limpiar,\nusp_etl_cargar)" as ETL
+component "Almacén DW_CFR_BI\n(esquemas stg y dw)" as DW
+interface "IDemandaModuloMes" as I2
+interface "IEjecucionModelo" as I3
+interface "IModeloEstrella" as I4
+component "Núcleo RLM\n(experimento.py)" as RLM
+component "Informe Power BI\n(informe_cfr.pbix)" as PBI
+OLTP -- I1
+DW -- I2
+DW -- I3
+DW -- I4
+PT ..> ETL : invoca\n(sqlcmd)
+ETL ..> I1 : extrae
+ETL --> DW : carga
+RLM ..> I2 : lee
+RLM ..> I3 : escribe\nbetas y Ŷ
+PBI ..> I4 : Import /\nDirectQuery
+PBI ..> I3 : lee betas\nvigentes
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+!include estilo_rose.iuml
+|Jefe de consultoría y proyectos|
+start
+:Extraer los datos del portal web\nde tickets;
+:Consultar a los jefes de las otras áreas;
+:Calcular los indicadores\nen un documento Word;
+:Enviar el reporte mensual por el\ncorreo de la empresa (≈ 1 semana);
+|Gerente general|
+:Revisar el correo recibido;
+if (¿La información es suficiente\ny está actualizada?) then (no)
+  :Buscar en correos anteriores\no llamar al personal;
+  |Jefe de consultoría y proyectos|
+  :Responder la consulta del gerente;
+  |Gerente general|
+else (sí)
+endif
+:Tomar decisiones sobre\nla asignación del personal;
+stop
+@enduml

@@ -1,0 +1,3 @@
+id_ejecucion,marca_tiempo,version_algoritmo,semilla_generador,lambda_ridge,version_datos,particion,equipo,sha256_dataset,sha256_protocolo
+EJ-20261021-004441,2026-10-21T00:44:41,1.0.0,2026,0.01,2.1.0,"entrenamiento t<=29 (551 casos), prueba t>=30 (133 casos)",x86_64 | Linux | Python 3.13.16 | NumPy 2.5.3,137b7664c7efc6c644f41fe353e589f88b70dfa3a4044918ea544c9ef79b5662,293f7301e121ee2e161b0739ca7d90d3156910ab24b7b3047cdddeb0bb9f590d
+EJ-20261021-010431,2026-10-21T01:04:31,1.0.0,2026,0.01,2.1.0,"entrenamiento t<=29 (551 casos), prueba t>=30 (133 casos)","Intel64 Family 6 Model 186 Stepping 2, GenuineIntel | Windows | Python 3.13.7 | NumPy 2.2.6",53b0500f3edddf9445d39a2e09a85431dbc83a103f994a75908f2ff209051b14,293f7301e121ee2e161b0739ca7d90d3156910ab24b7b3047cdddeb0bb9f590d
