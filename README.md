@@ -1,4 +1,4 @@
-# experimento_cfr
+# BD_cfr
 
 Experimento comparativo del proyecto de tesis *Implementación de un sistema de inteligencia de
 negocios basado en procesos ETL y análisis predictivo de regresión lineal múltiple para la gestión
