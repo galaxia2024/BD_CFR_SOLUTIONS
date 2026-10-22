@@ -8,6 +8,34 @@ CREATE SCHEMA stg;
 GO
 CREATE SCHEMA dw;
 GO
+-- Staging: copia de las tablas de origen antes de la limpieza
+CREATE TABLE stg.Tickets (
+    ID_Ticket INT NOT NULL,
+    ID_Cliente INT NOT NULL,
+    ID_Consultor INT NOT NULL,
+    ID_Modulo INT NOT NULL,
+    Descripcion VARCHAR(500) NULL,
+    Prioridad VARCHAR(10) NULL,
+    Fecha_Creacion DATETIME NOT NULL,
+    Fecha_Cierre DATETIME NULL,
+    Escalado CHAR(2) NULL,
+    Estado VARCHAR(25) NOT NULL,
+    Prioridad_Imputada BIT NOT NULL DEFAULT 0
+);
+CREATE TABLE stg.Clientes (
+    ID_Cliente INT NOT NULL, Tipo TINYINT NOT NULL, Cliente VARCHAR(150) NOT NULL,
+    RUC CHAR(11) NULL, Estado BIT NOT NULL, Mes_Alta INT NOT NULL, Mes_Baja INT NULL
+);
+CREATE TABLE stg.Consultores (
+    ID_Consultor INT NOT NULL, Nombres VARCHAR(80) NOT NULL, Apellidos VARCHAR(80) NOT NULL,
+    Area VARCHAR(20) NOT NULL, Estado BIT NOT NULL
+);
+CREATE TABLE stg.Modulos (
+    ID_Modulo INT NOT NULL, Modulo VARCHAR(60) NOT NULL, Peso_Productividad TINYINT NOT NULL
+);
+CREATE TABLE stg.Proyectos (
+    ID_Proyecto INT NOT NULL, Id_Cliente INT NOT NULL, Fecha_GoLive_Real DATE NULL
+);
 -- Dimensiones
 CREATE TABLE dw.Dim_Tiempo (
     SK_Tiempo INT PRIMARY KEY,               -- AAAAMMDD

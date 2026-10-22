@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CFR BI · Prototipo de verificación</title>
+<style>
+  :root { --tinta:#1f2a37; --suave:#5b6675; --linea:#d5dbe3; --fondo:#f4f6f9; --panel:#ffffff;
+          --acento:#1f4e79; --real:#1f4e79; --est:#c55a11; --verde:#2e7d32; --ambar:#b7791f; --rojo:#c62828; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:14px/1.45 "Segoe UI", Arial, sans-serif; color:var(--tinta); background:var(--fondo); }
+  header { background:var(--acento); color:#fff; padding:12px 20px; display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; }
+  header h1 { font-size:17px; margin:0; font-weight:600; }
+  header span { font-size:12px; opacity:.85; }
+  nav { display:flex; gap:2px; padding:0 20px; background:#e3e8ef; border-bottom:1px solid var(--linea); }
+  nav button { border:0; background:none; padding:10px 14px; font:inherit; color:var(--suave); cursor:pointer; border-bottom:3px solid transparent; }
+  nav button[aria-selected="true"] { color:var(--acento); border-bottom-color:var(--acento); font-weight:600; }
+  main { padding:18px 20px; max-width:1100px; }
+  section[hidden] { display:none; }
+  .filtros { display:flex; gap:12px; align-items:end; flex-wrap:wrap; background:var(--panel); border:1px solid var(--linea); padding:12px; }
+  label { display:flex; flex-direction:column; font-size:12px; color:var(--suave); gap:3px; }
+  select { font:inherit; padding:5px 6px; border:1px solid #b9c2cd; background:#fff; min-width:120px; }
+  .btn { font:inherit; padding:7px 16px; background:var(--acento); color:#fff; border:0; cursor:pointer; }
+  .btn:disabled { background:#8a9bb0; cursor:wait; }
+  .msg { margin:12px 0 0; padding:8px 10px; border-left:4px solid var(--rojo); background:#fdecea; color:#8e1b1b; }
+  .msg[hidden] { display:none; }
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:10px; margin:14px 0; }
+  .kpi { background:var(--panel); border:1px solid var(--linea); padding:10px 12px; }
+  .kpi b { display:block; font-size:22px; font-variant-numeric:tabular-nums; }
+  .kpi small { color:var(--suave); }
+  .panel { background:var(--panel); border:1px solid var(--linea); padding:12px; margin-top:12px; overflow-x:auto; }
+  .panel h2 { font-size:14px; margin:0 0 8px; }
+  table { border-collapse:collapse; width:100%; font-variant-numeric:tabular-nums; }
+  th, td { text-align:left; padding:5px 8px; border-bottom:1px solid var(--linea); white-space:nowrap; }
+  th { font-weight:600; color:var(--suave); font-size:12px; }
+  .ley { display:flex; gap:14px; font-size:12px; color:var(--suave); }
+  .ley i { display:inline-block; width:14px; height:3px; vertical-align:middle; margin-right:4px; }
+  .sem { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:-1px; }
+  .Verde { background:var(--verde); } .Ámbar { background:var(--ambar); } .Rojo { background:var(--rojo); }
+  .vacio { color:var(--suave); padding:20px 0; }
+  #t-ejec td { white-space:normal; }
+  svg text { font:11px "Segoe UI", Arial, sans-serif; fill:var(--suave); }
+</style>
+</head>
+<body>
+<header><h1>CFR Business &amp; Solutions · Inteligencia de negocios</h1><span>Prototipo de verificación v1.0.0 · datos del experimento v2.1 (semilla 2026)</span></header>
+<nav role="tablist">
+  <button role="tab" id="tab-p01" aria-selected="true" data-p="p01">P-01 Proyección de demanda</button>
+  <button role="tab" id="tab-p02" aria-selected="false" data-p="p02">P-02 Cumplimiento del SLA</button>
+  <button role="tab" id="tab-p03" aria-selected="false" data-p="p03">P-03 Ejecuciones y cargas</button>
+</nav>
+<main>
+  <!-- P-01 -->
+  <section id="p01">
+    <div class="filtros">
+      <label>Módulo<select id="f-modulo"></select></label>
+      <label>Desde<select id="f-desde"></select></label>
+      <label>Hasta<select id="f-hasta"></select></label>
+      <button class="btn" id="btn-proyeccion">Consultar</button>
+    </div>
+    <p class="msg" id="msg-p01" role="alert" hidden></p>
+    <div id="vista-p01"><p class="vacio">Seleccione un módulo y un periodo, luego pulse Consultar.</p></div>
+  </section>
+  <!-- P-02 -->
+  <section id="p02" hidden>
+    <div class="filtros">
+      <label>Tipo de contrato<select id="f-tipo"><option>Contrato</option><option>Bolsa de horas</option></select></label>
+      <label>Prioridad<select id="f-prio"><option>Todas</option><option>Alta</option><option>Media</option><option>Baja</option></select></label>
+      <button class="btn" id="btn-sla">Consultar</button>
+    </div>
+    <p class="msg" id="msg-p02" role="alert" hidden></p>
+    <div id="vista-p02"><p class="vacio">Elija el tipo de contrato y la prioridad, luego pulse Consultar.</p></div>
+  </section>
+  <!-- P-03 -->
+  <section id="p03" hidden>
+    <div class="filtros"><button class="btn" id="btn-ejec">Actualizar</button></div>
+    <p class="msg" id="msg-p03" role="alert" hidden></p>
+    <div id="vista-p03"><p class="vacio">Pulse Actualizar para ver el registro de ejecuciones.</p></div>
+  </section>
+</main>
+<script>
+const $ = s => document.querySelector(s);
+const fmt = (n, d = 2) => Number(n).toLocaleString("es-PE", { minimumFractionDigits: d, maximumFractionDigits: d });
+const SIN_SERVIDOR = "Error: Servidor de datos no accesible";
+
+// Pestañas
+document.querySelectorAll("nav button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll("nav button").forEach(x => x.setAttribute("aria-selected", x === b));
+  document.querySelectorAll("main section").forEach(s => s.hidden = s.id !== b.dataset.p);
+}));
+
+// Consulta con bloqueo de interacciones duplicadas: el botón queda deshabilitado mientras la
+// solicitud está en curso; si falla, se muestra el mensaje y se conserva la última vista.
+async function consultar(boton, msg, url, pintar) {
+  if (boton.disabled) return;
+  boton.disabled = true;
+  msg.hidden = true;
+  try {
+    const r = await fetch(url);
+    let datos = null;
+    try { datos = await r.json(); } catch (_) { /* respuesta no JSON */ }
+    if (!r.ok) throw new Error(datos && datos.error && r.status < 500 ? datos.error : SIN_SERVIDOR);
+    pintar(datos);
+  } catch (e) {
+    msg.textContent = e.message.startsWith("Error:") ? e.message : SIN_SERVIDOR;
+    msg.hidden = false;
+  } finally {
+    boton.disabled = false;
+  }
+}
+
+function grafico(meses) {
+  const W = 760, H = 240, m = { l: 40, r: 12, t: 12, b: 34 };
+  const vals = meses.flatMap(x => [x.real, x.estimado]);
+  const max = Math.max(1, Math.ceil(Math.max(...vals) * 1.15));
+  const xs = i => m.l + (meses.length === 1 ? 0 : i * (W - m.l - m.r) / (meses.length - 1));
+  const ys = v => m.t + (H - m.t - m.b) * (1 - v / max);
+  const linea = k => meses.map((x, i) => `${i ? "L" : "M"}${xs(i).toFixed(1)},${ys(x[k]).toFixed(1)}`).join("");
+  let g = "";
+  for (let k = 0; k <= 4; k++) {
+    const v = max * k / 4, y = ys(v);
+    g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y}" y2="${y}" stroke="#e6eaf0"/><text x="${m.l - 6}" y="${y + 4}" text-anchor="end">${Math.round(v)}</text>`;
+  }
+  const paso = Math.ceil(meses.length / 12);
+  meses.forEach((x, i) => { if (i % paso === 0) g += `<text x="${xs(i)}" y="${H - 12}" text-anchor="middle">${x.periodo}</text>`; });
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Tickets reales y estimados por mes">${g}
+    <path d="${linea("real")}" fill="none" stroke="var(--real)" stroke-width="2"/>
+    <path d="${linea("estimado")}" fill="none" stroke="var(--est)" stroke-width="2" stroke-dasharray="5 3"/></svg>`;
+}
+
+function pintarProyeccion(d) {
+  const e = d.ecuacion;
+  $("#vista-p01").innerHTML = `
+    <div class="kpis">
+      <div class="kpi"><small>Tickets reales</small><b id="k-real">${d.total_real}</b></div>
+      <div class="kpi"><small>Tickets estimados (RLM)</small><b id="k-est">${fmt(d.total_estimado)}</b></div>
+      <div class="kpi"><small>RMSE del periodo</small><b id="k-rmse">${fmt(d.rmse, 4)}</b></div>
+      <div class="kpi"><small>MAE del periodo</small><b id="k-mae">${fmt(d.mae, 4)}</b></div>
+    </div>
+    <div class="panel"><h2>${d.modulo}: tickets reales y estimados</h2>
+      <div class="ley"><span><i style="background:var(--real)"></i>Real</span><span><i style="background:var(--est)"></i>Estimado RLM</span></div>
+      ${grafico(d.meses)}
+      <small>Ŷ = ${fmt(e.b0, 4)} + ${fmt(e.b1, 4)}·X₁ + ${fmt(e.b2, 4)}·X₂ + ${fmt(e.b3, 4)}·X₃ (ejecución vigente)</small></div>
+    <div class="panel"><table id="t-proy"><thead><tr><th>Mes</th><th>X₁ clientes</th><th>X₂ go-live previo</th><th>X₃ peso</th><th>Real</th><th>Estimado</th></tr></thead>
+      <tbody>${d.meses.map(x => `<tr><td>${x.periodo}</td><td>${x.x1}</td><td>${x.x2}</td><td>${x.x3}</td><td>${x.real}</td><td>${fmt(x.estimado)}</td></tr>`).join("")}</tbody></table></div>`;
+}
+
+function pintarSla(d) {
+  $("#vista-p02").innerHTML = `
+    <div class="kpis">
+      <div class="kpi"><small>Tickets (${d.horas_limite} h de plazo)</small><b id="k-total">${d.total}</b></div>
+      <div class="kpi"><small><span class="sem Verde"></span>Verde (&lt; 70 % del plazo)</small><b id="k-verde">${d.verde}</b></div>
+      <div class="kpi"><small><span class="sem Ámbar"></span>Ámbar (70 % a 100 %)</small><b id="k-ambar">${d.ambar}</b></div>
+      <div class="kpi"><small><span class="sem Rojo"></span>Rojo (plazo vencido)</small><b id="k-rojo">${d.rojo}</b></div>
+      <div class="kpi"><small>Cumplimiento del SLA</small><b id="k-cumple">${fmt(d.cumplimiento)} %</b></div>
+      <div class="kpi"><small>Bono devengado</small><b id="k-bono">S/ ${fmt(d.bono_soles)}</b></div>
+    </div>
+    <div class="panel"><h2>Últimos 15 tickets</h2><table id="t-sla"><thead><tr><th>Ticket</th><th>Creación</th><th>Prioridad</th><th>Horas</th><th>Semáforo</th></tr></thead>
+      <tbody>${d.ultimos.map(t => `<tr><td>${t.id}</td><td>${t.fecha}</td><td>${t.prioridad}</td><td>${fmt(t.horas, 1)}</td><td><span class="sem ${t.semaforo}"></span>${t.semaforo}</td></tr>`).join("")}</tbody></table></div>`;
+}
+
+function pintarEjec(d) {
+  const v = d.vigente;
+  $("#vista-p03").innerHTML = `
+    <div class="panel"><h2>Ejecuciones del modelo</h2><table id="t-ejec"><thead><tr><th>Id</th><th>Marca de tiempo</th><th>Algoritmo</th><th>Datos</th><th>Semilla</th><th>Partición</th><th>SHA-256 (12)</th></tr></thead>
+      <tbody>${d.ejecuciones.map(r => `<tr><td>${r.id}</td><td>${r.marca_tiempo}</td><td>${r.version_algoritmo}</td><td>${r.version_datos}</td><td>${r.semilla}</td><td>${r.particion}</td><td><code>${r.sha256_dataset}</code></td></tr>`).join("")}</tbody></table>
+      <small>Coeficientes vigentes: β₀ = ${fmt(v.b0, 4)}, β₁ = ${fmt(v.b1, 4)}, β₂ = ${fmt(v.b2, 4)}, β₃ = ${fmt(v.b3, 4)}</small></div>
+    <div class="panel"><h2>Última carga del ETL</h2><table id="t-limp"><thead><tr><th>Regla</th><th>Registros</th></tr></thead>
+      <tbody>${d.limpieza.map(r => `<tr><td>${r.regla}</td><td>${r.registros.toLocaleString("es-PE")}</td></tr>`).join("")}</tbody></table></div>`;
+}
+
+$("#btn-proyeccion").addEventListener("click", e => {
+  const q = new URLSearchParams({ modulo: $("#f-modulo").value, desde: $("#f-desde").value, hasta: $("#f-hasta").value });
+  consultar(e.currentTarget, $("#msg-p01"), "/api/proyeccion?" + q, pintarProyeccion);
+});
+$("#btn-sla").addEventListener("click", e => {
+  const q = new URLSearchParams({ tipo_contrato: $("#f-tipo").value, prioridad: $("#f-prio").value });
+  consultar(e.currentTarget, $("#msg-p02"), "/api/sla?" + q, pintarSla);
+});
+$("#btn-ejec").addEventListener("click", e => consultar(e.currentTarget, $("#msg-p03"), "/api/ejecuciones", pintarEjec));
+
+// Catálogos iniciales
+(async () => {
+  try {
+    const d = await (await fetch("/api/modulos")).json();
+    $("#f-modulo").innerHTML = d.modulos.map(m => `<option value="${m.id}">${m.nombre}</option>`).join("");
+    const op = d.periodos.map(p => `<option>${p}</option>`).join("");
+    $("#f-desde").innerHTML = op; $("#f-hasta").innerHTML = op;
+    $("#f-desde").value = d.periodos[0]; $("#f-hasta").value = d.periodos[d.periodos.length - 1];
+    document.body.dataset.listo = "1";
+  } catch (_) {
+    $("#msg-p01").textContent = SIN_SERVIDOR; $("#msg-p01").hidden = false;
+  }
+})();
+</script>
+</body>
+</html>
