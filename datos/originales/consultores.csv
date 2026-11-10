@@ -1,12 +1,12 @@
 ID_Consultor,nombres,apellidos,area,telefono,email,genero,estado
-1,Consultor 01,(sintético),Consultoría,986666683,consultor01@ejemplo.pe,2,1
-2,Consultor 02,(sintético),Consultoría,926104133,consultor02@ejemplo.pe,2,1
-3,Consultor 03,(sintético),Consultoría,912377578,consultor03@ejemplo.pe,2,1
-4,Consultor 04,(sintético),Soporte,967592184,consultor04@ejemplo.pe,2,1
-5,Consultor 05,(sintético),Soporte,942892990,consultor05@ejemplo.pe,1,1
-6,Consultor 06,(sintético),Soporte,952054156,consultor06@ejemplo.pe,2,1
-7,Consultor 07,(sintético),Soporte,917184524,consultor07@ejemplo.pe,2,1
-8,Consultor 08,(sintético),Soporte,943345047,consultor08@ejemplo.pe,1,1
-9,Consultor 09,(sintético),Soporte,967910599,consultor09@ejemplo.pe,1,1
-10,Consultor 10,(sintético),Desarrollo,941942560,consultor10@ejemplo.pe,1,1
-11,Consultor 11,(sintético),Desarrollo,984795496,consultor11@ejemplo.pe,2,1
+1,Fatima,Chiroque,Soporte,963895207,fatima.chiroque@cfr-bs.com,2,1
+2,Henry,Chapiyequen,Soporte,959728122,henry.chapilliquen@cfr-bs.com,1,1
+3,Nelson,Bautista,Soporte,952107494,nelson.bautista@cfr-bs.com,1,1
+4,Jonathan,Rivera,Soporte,940489400,jonathan.rivera@cfr-bs.com,1,1
+5,Sayuri,Gómez,Soporte,913359090,sayuri.diaz@cfr-bs.com,2,1
+6,Karen,Torres,Soporte,923961930,karen.torres@cfr-bs.com,2,1
+7,Gonzalo,Jimenez,Consultoría,993842407,gonzalo.jimenez@cfr-bs.com,1,1
+8,Hernan,Canchanya,Consultoría,952107500,hernan.canchanya@cfr-bs.com,1,1
+9,Eduardo,Contreras,Consultoría,963890491,eduardo.contreras@cfr-bs.com,1,1
+10,Nicolas,Roldan,Desarrollo,988362562,nicolas.rondan@cfr-bs.com,1,1
+11,Gino,Aguilar,Desarrollo,943908235,gino.aguilar@cfr-bs.com,1,1
